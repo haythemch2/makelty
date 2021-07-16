@@ -1,0 +1,21 @@
+.hs {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+  }
+  .restaurantCard {
+    display: inline-block;
+  }
+  .Home{
+    background-color:beige;
+    width: 100%;
+    height: 95vh;
+  }
+ .routerLink{
+    text-decoration: none;
+    color:white
+  }
+.routerLink:hover{
+    text-decoration: none;
+    color:rgb(241, 71, 3)
+  }

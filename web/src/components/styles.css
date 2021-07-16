@@ -1,0 +1,39 @@
+.hs {
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+  white-space: nowrap;
+}
+.card {
+  display: inline-block;
+}
+.Home {
+  background-color: beige;
+  width: 100%;
+  height: 95vh;
+}
+.routerLink {
+  text-decoration: none;
+  color: white;
+}
+.routerLink:hover {
+  text-decoration: none;
+  color: rgb(241, 71, 3);
+}
+
+.background-image {
+  /* background-image: url("./../banner.jpg"); */
+  background: linear-gradient(
+      to bottom,
+      rgba(255, 255, 255, 0) 1%,
+      rgb(0, 0, 0)
+    ),
+    url("./../banner.jpg");
+  min-height: 80vh;
+  background-attachment: fixed;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+
+  /* IE */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ADB2B6', endColorstr='#ABAEB3', GradientType=0);
+}
