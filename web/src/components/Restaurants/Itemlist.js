@@ -8,6 +8,9 @@ import {
 } from "./../../Slices/RestaurantsSlice";
 import { useEffect } from "react";
 import axios from "axios";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
 
 const isThisDeviceMobile = function () {
   let check = false;
@@ -28,6 +31,45 @@ const isThisDeviceMobile = function () {
 let serverHostName = isThisDeviceMobile() ? "192.168.43.4" : "localhost";
 
 function Itemlist() {
+  const option = {
+    items: 1,
+    responsiveClass: true,
+    margin: 10,
+    nav: false,
+    rewind: true,
+    autoplay: true,
+    slideBy: 1,
+    dots: true,
+    dotsEach: true,
+    dotData: false,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 1,
+      },
+      600: {
+        items: 1,
+      },
+      700: {
+        items: 2,
+      },
+      800: {
+        items: 2,
+      },
+      900: {
+        items: 3,
+      },
+      1000: {
+        items: 3,
+      },
+      1300: {
+        items: 4,
+      },
+    },
+  };
+
   let dispatch = useDispatch();
 
   const fetchrestaurants = () => {
@@ -61,14 +103,16 @@ function Itemlist() {
     dispatch(editActive({ id: restKey, active: isVisible }));
   };
   return (
-    <div className="hs full">
-      {Object.keys(restaurants).map((restKey) => (
-        <VisibilitySensor
-          onChange={(isVisible) => onChange({ isVisible, restKey })}
-        >
+    <div>
+      <OwlCarousel {...option}>
+        {Object.keys(restaurants).map((restKey) => (
+          // <VisibilitySensor
+          //   onChange={(isVisible) => onChange({ isVisible, restKey })}
+          // >
           <Resitem rest={restaurants[restKey]} />
-        </VisibilitySensor>
-      ))}
+          /* </VisibilitySensor> */
+        ))}
+      </OwlCarousel>
     </div>
   );
 }

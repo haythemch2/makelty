@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Button, Table, Modal, Form } from "react-bootstrap";
+import { DataGrid, GridToolbar } from "@material-ui/data-grid";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -7,6 +8,8 @@ import {
   storeMenuItems,
 } from "./../../Slices/RestaurantsSlice";
 import { useEffect } from "react";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
 
 const isThisDeviceMobile = function () {
   let check = false;
@@ -27,7 +30,10 @@ const isThisDeviceMobile = function () {
 let serverHostName = isThisDeviceMobile() ? "192.168.43.4" : "localhost";
 
 function ManageRestaurants() {
+  const MySwal = withReactContent(Swal);
   const [show, setShow] = useState(false);
+  const [valueToEdit, setValueToEdit] = useState("");
+  const [ping, setPing] = useState(false);
   const [showOwnerEdit, setShowOwnerEdit] = useState(false);
   const [restaurantOwners, setRestaurantOwners] = useState({});
   const [newOwner, setNewOwner] = useState(0);
@@ -37,12 +43,15 @@ function ManageRestaurants() {
     axios
       .get(`http://${serverHostName}:3001/C/getrestaurants`)
       .then((res) => {
-        dispatch(storerestaurants(res.data));
+        let restaurants = res.data;
+        Object.values(restaurants).map((restaurant) => {
+          restaurant["id"] = restaurant._id;
+        });
+        dispatch(storerestaurants(restaurants));
       })
       .catch((err) => {
         console.log("Error from show restaurant list");
       });
-      
   };
   const fetchMenuItems = () => {
     axios
@@ -60,13 +69,13 @@ function ManageRestaurants() {
     axios
       .get(`http://${serverHostName}:3001/A/getRestaurantOwners`)
       .then((res) => {
-        let owners = {}
-        res.data.forEach(owner=>{
-          owners[owner._id] = owner
-        })
+        let owners = {};
+        res.data.forEach((owner) => {
+          owners[owner._id] = owner;
+        });
         setRestaurantOwners(owners);
       });
-  }, []);
+  }, [ping]);
   const restaurants = useSelector((state) => state.Restaurant.restaurants);
 
   /////////:::::::::::ADDING RESTAURANT:::::::::::::::////////////////
@@ -76,67 +85,151 @@ function ManageRestaurants() {
     description: "",
     coordinatelatitude: "",
     coordinatelongitude: "",
+    owner: "",
   });
 
   const handleRestaurantAdd = () => {
     setShow(false);
     axios.post("http://localhost:3001/A/createRestaurant", newRestaurant);
+    MySwal.fire({
+      icon: "success",
+      title: `Added !`,
+      showConfirmButton: false,
+      timer: 1500,
+    });
+    setPing(!ping);
   };
-  const handleOwnerEdit = () => {
-    setShowOwnerEdit(false);
-    axios.post("http://localhost:3001/A/editRestaurantOwner", {
-      restId: toEditRestaurantId,
-      userId: newOwner,
-    }).then((res)=>console.log(res.data)).catch((err)=>console.log(err));
-  };
-  let ownerName=(ownerId)=>{
+
+  let ownerName = ({ params }) => {
+    let ownerId = params.row.owner;
     if (!ownerId) return "undefined";
-    if (!restaurantOwners || Object.values(restaurantOwners).length == 0) return "";
-    return (<span>{restaurantOwners[ownerId].name}</span>)
-  }
+    if (!restaurantOwners || Object.values(restaurantOwners).length == 0)
+      return "nope";
+    return <span>{restaurantOwners[ownerId].name}</span>;
+  };
+  ///////////////////////////////////DATA GRID //////////////////////////////////
+
+  const columns = [
+    {
+      field: "owner",
+      headerName: "Owner",
+      width: 200,
+      renderCell: (params) => {
+        return ownerName({ params });
+      },
+    },
+    {
+      field: "title",
+      headerName: "Title",
+      sort: "true",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      sort: "true",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "image",
+      headerName: "Image",
+      sort: "true",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "rating",
+      headerName: "Rating",
+      sort: "true",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "reviews",
+      headerName: "Reviews",
+      sort: "true",
+      width: 150,
+      editable: true,
+    },
+    ,
+    {
+      field: "coordinatelatitude",
+      headerName: "Latitude",
+      width: 150,
+      editable: true,
+    },
+    {
+      field: "coordinatelongitude",
+      headerName: "Longitude",
+      width: 150,
+      editable: true,
+    },
+  ];
+  const handleEditRestaurant = ({ id, field }) => {
+    let RestaurantToEdit = Array.from(
+      Object.values(restaurants).filter((rest) => rest._id == id)[0]
+    );
+    RestaurantToEdit[field] = valueToEdit;
+    console.log(RestaurantToEdit);
+    axios
+      .put(`http://localhost:3001/A/${id}`, { ...RestaurantToEdit })
+      .then((res) => {
+        if (res.status >= 400) {
+          MySwal.fire({
+            icon: "error",
+            title: `Couldnt edit`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        } else {
+          MySwal.fire({
+            icon: "success",
+            title: `Edited succesfully`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          setPing(!ping);
+        }
+      });
+  };
+
   return (
     <div>
-      <Table striped bordered hover size="sm">
-        <thead>
-          <tr>
-            <th>Owner</th>
-            <th>Title</th>
-            <th>Description</th>
-            <th>image(url)</th>
-            <th>rating</th>
-            <th>reviews</th>
-            <th>latitude</th>
-            <th>longitude</th>
-            <th>Menu</th>
-          </tr>
-        </thead>
-
-        {Object.values(restaurants).map((restaurant) => (
-          <tbody>
-            <tr>
-              <td>
-                {ownerName(restaurant.owner)}
-                <Button
-                  onClick={() => {
-                    setShowOwnerEdit(true);
-                    setToEditRestaurantId(restaurant._id);
-                  }}
-                >
-                  edit
-                </Button>
-              </td>
-              <td>{restaurant.title}</td>
-              <td>{restaurant.description}</td>
-              <td>{restaurant.image}</td>
-              <td>{restaurant.rating}</td>
-              <td>{restaurant.reviews}</td>
-              <td>{restaurant.coordinatelatitude}</td>
-              <td>{restaurant.coordinatelongitude}</td>
-              <td>Menu</td>
-            </tr>
-          </tbody>
-        ))}
-      </Table>
+      <DataGrid
+        // classes={classes}
+        density="compact"
+        getRowId={(row) => row._id}
+        rows={Object.values(restaurants)}
+        columns={columns}
+        rowHeight={47}
+        pageSize={15}
+        disableSelectionOnClick
+        // onRowDoubleClick={(params) => {
+        //   console.log(params);
+        // }}
+        // checkboxSelection
+        // disableMultipleSelection={true}
+        autoHeight={true}
+        autoWidth={true}
+        // onRowSelected={(e) => {
+        //   handleRowSelection(e);
+        // }}
+        onEditCellChange={({ props }) => {
+          setValueToEdit(props.value);
+        }}
+        onEditCellChangeCommitted={(e) => {
+          console.log(e);
+          handleEditRestaurant({
+            id: e.id,
+            field: e.field,
+          });
+        }}
+        components={{
+          Toolbar: GridToolbar,
+        }}
+      />
       <Button onClick={() => setShow(true)}>Add Restaurant</Button>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
@@ -199,6 +292,20 @@ function ManageRestaurants() {
                   })
                 }
               />
+              <Form.Label>Owner</Form.Label>
+              <Form.Control
+                as="select"
+                value={newRestaurant.owner}
+                onChange={(e) =>
+                  setNewRestaurant({ ...newRestaurant, owner: e.target.value })
+                }
+              >
+                {Object.keys(restaurantOwners).map((key) => (
+                  <option value={restaurantOwners[key]._id}>
+                    {restaurantOwners[key].name}
+                  </option>
+                ))}
+              </Form.Control>
             </Form.Group>
           </Form>
         </Modal.Body>
@@ -208,35 +315,6 @@ function ManageRestaurants() {
           </Button>
           <Button variant="primary" onClick={handleRestaurantAdd}>
             ADD!
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      <Modal show={showOwnerEdit} onHide={() => setShowOwnerEdit(false)}>
-        <Modal.Header closeButton>
-          <Modal.Title>edit owner</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Form>
-            <Form.Group>
-              <Form.Label>select Owner</Form.Label>
-              <Form.Control
-                as="select"
-                value={newOwner}
-                onChange={(e) => setNewOwner(e.target.value)}
-              >
-                {Object.keys(restaurantOwners).map((key) => (
-                  <option value={restaurantOwners[key]._id}>{restaurantOwners[key].name}</option>
-                ))}
-              </Form.Control>
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={() => setShowOwnerEdit(false)}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleOwnerEdit}>
-            Edit!
           </Button>
         </Modal.Footer>
       </Modal>

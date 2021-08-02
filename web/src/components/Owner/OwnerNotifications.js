@@ -28,6 +28,7 @@ function OwnerNotifications({ Restaurant }) {
     console.log("subscribed");
     realtime.current.subscribe("newOrderItem", {}, (newOrderItem) => {
       dispatch(addOrderItem(newOrderItem));
+      //LOG HERE NEXT !
     });
   }, []);
 

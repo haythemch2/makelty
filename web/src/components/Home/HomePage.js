@@ -1,6 +1,5 @@
 import React from "react";
-import { Container, Button } from "react-bootstrap";
-import "./../styles.css";
+import { Container, Button, Card } from "react-bootstrap";
 
 import {
   editActive,
@@ -11,6 +10,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import ResCard from "./ResCard";
+import "./HomePage.css";
+import OwlCarousel from "react-owl-carousel";
+import "owl.carousel/dist/assets/owl.carousel.css";
+import "owl.carousel/dist/assets/owl.theme.default.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
 
 const isThisDeviceMobile = function () {
   let check = false;
@@ -31,6 +36,45 @@ const isThisDeviceMobile = function () {
 let serverHostName = isThisDeviceMobile() ? "192.168.43.4" : "localhost";
 
 function HomePage() {
+  const option = {
+    items: 1,
+    responsiveClass: true,
+    margin: 10,
+    nav: true,
+    rewind: true,
+    autoplay: true,
+    slideBy: 1,
+    dots: true,
+    dotsEach: true,
+    dotData: true,
+    responsive: {
+      0: {
+        items: 1,
+      },
+      400: {
+        items: 1,
+      },
+      600: {
+        items: 1,
+      },
+      700: {
+        items: 2,
+      },
+      800: {
+        items: 2,
+      },
+      900: {
+        items: 3,
+      },
+      1000: {
+        items: 3,
+      },
+      1300: {
+        items: 4,
+      },
+    },
+  };
+
   let dispatch = useDispatch();
 
   const fetchrestaurants = () => {
@@ -62,46 +106,164 @@ function HomePage() {
 
   return (
     <>
-      <div className="background-image">
-        <Container fluid style={{ paddingTop: "7rem" }}>
-          <div
-            style={{
-              width: "50rem",
-              height: "12rem",
-              backgroundColor: "rgba(255, 255, 255, 0.2)",
-              margin: "auto",
-              paddingTop: "1rem",
-              borderRadius: "2%",
-            }}
-          >
-            <h1
-              style={{
-                color: "white",
-                textAlign: "center",
-              }}
-            >
-              Makelty !
-            </h1>
-            <p
-              style={{
-                color: "white",
-                textAlign: "center",
-                paddingTop: "1rem",
-              }}
-            >
-              Food Right To Your Door Steps !
-            </p>
-            <Button variant="outline-danger" style={{ marginLeft: "43%" }}>
-              order Now!
-            </Button>
+      <main>
+        <div>
+          <h1>Are you starving?</h1>
+          <FontAwesomeIcon icon="fa-solid fa-circle-location-arrow" />{" "}
+          <h3>Within a few clicks, find meals thatare accessible near you</h3>
+          <div className="special"></div>
+        </div>
+        <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png" />
+      </main>
+      <Container>
+        <section className="news">
+          <div className="news-item">
+            <div className="percentage">
+              <h1>15</h1>
+              <p>%</p>
+            </div>
+            <img
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              alt=""
+            />
+
+            <h3>Fla hills sanditch</h3>
+            <span>6 days Remaining</span>
+          </div>
+          <div className="news-item">
+            <div className="percentage">
+              <h1>15</h1>
+              <p>%</p>
+            </div>
+            <img
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              alt=""
+            />
+
+            <h3>Fla hills sanditch</h3>
+            <span>6 days Remaining</span>
+          </div>
+          <div className="news-item">
+            <div className="percentage">
+              <h1>15</h1>
+              <p>%</p>
+            </div>
+            <img
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              alt=""
+            />
+
+            <h3>Fla hills sanditch</h3>
+            <span>6 days Remaining</span>
+          </div>
+          <div className="news-item">
+            <div className="percentage">
+              <h1>15</h1>
+              <p>%</p>
+            </div>
+            <img
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              alt=""
+            />
+
+            <h3>Fla hills sanditch</h3>
+            <span>6 days Remaining</span>
+          </div>
+        </section>
+      </Container>
+
+      <section className="about-us">
+        <Container>
+          <div className="about">
+            <h1 style={{ fontWeight: "bold" }}>How does it work</h1>
+            <div className="about-list">
+              <div className="about-card">
+                <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/location.png"></img>
+                <h3>Select location</h3>
+                <p>Choose the location where your food will be delivered.</p>
+              </div>
+              <div className="about-card">
+                <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/order.png"></img>
+                <h3>Choose order</h3>
+                <p>Choose the location where your food will be delivered.</p>
+              </div>
+              <div className="about-card">
+                <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/pay.png"></img>
+                <h3>Pay advanced</h3>
+                <p>Choose the location where your food will be delivered.</p>
+              </div>
+              <div className="about-card">
+                <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/meals.png"></img>
+                <h3>Enjoy meals</h3>
+                <p>Choose the location where your food will be delivered.</p>
+              </div>
+            </div>
           </div>
         </Container>
-      </div>
-      <div style={{ backgroundColor: "black" }}>
-        {Object.keys(restaurants).map((restKey) => (
-          <ResCard rest={restaurants[restKey]} />
-        ))}
-      </div>
+      </section>
+      <section className="carousel-f">
+        <h1 style={{ fontWeight: "bold", color: "#f0742c" }}>Popular items</h1>
+        <OwlCarousel className="owl-theme carou" {...option}>
+          <div class="carousel-card">
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
+            <h3>Cheese Burger</h3>
+            <span>
+              <FontAwesomeIcon icon={faLocationArrow} size="sm" /> Burger Arena
+            </span>
+            <h5>$3.88</h5>
+            <button>Order nows</button>
+          </div>
+          <div class="carousel-card">
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
+            <h3>Cheese Burger</h3>
+            <span>
+              <FontAwesomeIcon icon={faLocationArrow} size="sm" />
+              Burger Arena
+            </span>
+            <h5>$3.88</h5>
+            <button>Order nows</button>
+          </div>{" "}
+          <div class="carousel-card">
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
+            <h3>Cheese Burger</h3>
+            <span>
+              <FontAwesomeIcon icon={faLocationArrow} size="sm" />
+              Burger Arena
+            </span>
+            <h5>$3.88</h5>
+            <button>Order nows</button>
+          </div>{" "}
+          <div class="carousel-card">
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
+            <h3>Cheese Burger</h3>
+            <span>
+              <FontAwesomeIcon icon={faLocationArrow} size="sm" />
+              Burger Arena
+            </span>
+            <h5>$3.88</h5>
+            <button>Order nows</button>
+          </div>
+          <div class="carousel-card">
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
+            <h3>Cheese Burger</h3>
+            <span>
+              {" "}
+              <FontAwesomeIcon icon={faLocationArrow} size="sm" />
+              Burger Arena
+            </span>
+            <h5>$3.88</h5>
+            <button>Order nows</button>
+          </div>
+        </OwlCarousel>
+      </section>
+      <section className="last">
+        <h1>Are you ready to order with the best deals?</h1>
+        <button>
+          <FontAwesomeIcon icon={faLocationArrow} size="sm" />
+          <span> PROCEED TO ORDER</span>
+        </button>
+      </section>
+      <section></section>
     </>
   );
 }

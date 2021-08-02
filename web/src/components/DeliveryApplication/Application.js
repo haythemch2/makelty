@@ -1,8 +1,15 @@
 import React, { useState } from "react";
-import { Alert, Form, Button } from "react-bootstrap";
+import { Alert, Form, Button, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+
+import { useHistory } from "react-router-dom";
+
 import axios from "axios";
 function Application() {
+  const history = useHistory();
+  const MySwal = withReactContent(Swal);
   let token = localStorage.getItem("token");
   let userId = localStorage.getItem("userId");
   let userName = localStorage.getItem("userName");
@@ -48,8 +55,22 @@ function Application() {
         backIdImg: backIdRes.data.fileId,
       };
       axios.post("http://localhost:3001/C/deliveryApplication", newApplication);
-      alert("Applied");
-    } else alert("please fill all data");
+      MySwal.fire({
+        icon: "success",
+        title: `Applied succesfully !`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setTimeout(() => {
+        history.push("/profile");
+      }, 2000);
+    } else
+      MySwal.fire({
+        icon: "error",
+        title: `Please Fill all Forms !`,
+        showConfirmButton: false,
+        timer: 1500,
+      });
   };
   const onChangeFrontId = (e) => {
     setFrontId({ file: e.target.files[0] });
@@ -59,7 +80,7 @@ function Application() {
   };
 
   return (
-    <div>
+    <Container style={{ marginTop: "5rem" }}>
       <Alert variant="success">Become a partenered Delivery carrier</Alert>
       <Form>
         <Form.Label>your name</Form.Label>
@@ -92,7 +113,7 @@ function Application() {
         </Form.Group>
         <Button onClick={handleApply}>Apply</Button>
       </Form>
-    </div>
+    </Container>
   );
 }
 

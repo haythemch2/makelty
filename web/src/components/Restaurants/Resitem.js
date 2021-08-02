@@ -24,10 +24,10 @@ function Resitem({ rest }, props) {
   };
   return (
     <>
-      <Link to={`/menu/${rest._id}`}>
+      <Link className="noHover" to={`/menu/${rest._id}`}>
         <Card
           style={{ width: "18rem", height: "25rem" }}
-          class="restaurantCard"
+          className="restaurantCard"
         >
           <Card.Img
             variant="top"
@@ -35,7 +35,9 @@ function Resitem({ rest }, props) {
             style={{ height: "191px" }}
           />
           <Card.Body>
-            <Card.Title style={{ color: "black" }}>{rest.title}</Card.Title>
+            <Card.Title style={{ color: "black", textDecoration: "none" }}>
+              {rest.title}
+            </Card.Title>
             <Card.Text style={{ color: "black" }}>{rest.description}</Card.Text>
             <Distance
               lat1={user.lat}

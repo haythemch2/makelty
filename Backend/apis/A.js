@@ -25,10 +25,22 @@ router.get("/getRestaurantOwners",(req,res)=>{
     .catch((err)=>res.status(400).json({err}))
 })
 
-router.post('/editRestaurantOwner',(req,res)=>{
-    Restaurant.findByIdAndUpdate(req.body.restId,{owner:req.body.userId},{upsert:true})
-    .then((r)=>res.json({msg:'owner edited'}))
-    .catch((err)=>console.log(err))
+router.put("/:restId",(req, res, next) => {
+  Restaurant.findByIdAndUpdate(
+    req.params.restId,
+    {
+      $set: req.body,
+    },
+    { new: true }
+  )
+    .then(
+      (rest) => {
+        res.setHeader("Content-Type", "application/json");
+        res.status(200).json(rest);
+      },
+      (err) => next(err)
+    )
+    .catch((err) => next(err));
 })
 
 

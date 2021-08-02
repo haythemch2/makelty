@@ -18,8 +18,8 @@ import { restoreSession } from "./Slices/ClientSlice";
 import { useHistory } from "react-router-dom";
 import OwnerDashboard from "./components/Owner/OwnerDashboard";
 import DeliveryDashboard from "./components/Delivery/DeliveryDashboard";
-import Authen from "./components/Auth/Authen";
 import HomePage from "./components/Home/HomePage";
+import Profile from "./components/Profile/Profile";
 
 function ForceLogin() {
   const token = useSelector((state) => state.Client.client?.token);
@@ -65,6 +65,10 @@ function App() {
             <Navbars />
             <Gmaps />
             <Itemlist />
+          </Route>
+          <Route path="/profile">
+            <Navbars />
+            <Profile />
           </Route>
           <Route path="/menu/:id">
             <Navbars />
