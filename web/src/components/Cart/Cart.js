@@ -10,8 +10,10 @@ import { faTrashAlt } from "@fortawesome/free-regular-svg-icons";
 import { faMotorcycle } from "@fortawesome/free-solid-svg-icons";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
+import { useHistory } from "react-router-dom";
 
 function Cart() {
+  const history = useHistory();
   const MySwal = withReactContent(Swal);
   const [alertInfo, setAlertInfo] = useState({
     show: false,
@@ -62,6 +64,9 @@ function Cart() {
         showConfirmButton: false,
         timer: 1500,
       });
+      setTimeout(() => {
+        history.push("/home");
+      }, 2000);
     } else {
       MySwal.fire({
         icon: "error",

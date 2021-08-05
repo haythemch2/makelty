@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Card } from "react-bootstrap";
+import { Container, Button, Card, Image } from "react-bootstrap";
 
 import {
   editActive,
@@ -7,6 +7,7 @@ import {
   storeMenuItems,
 } from "./../../Slices/RestaurantsSlice";
 import { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import ResCard from "./ResCard";
@@ -36,6 +37,7 @@ const isThisDeviceMobile = function () {
 let serverHostName = isThisDeviceMobile() ? "192.168.43.4" : "localhost";
 
 function HomePage() {
+  const history = useHistory();
   const option = {
     items: 1,
     responsiveClass: true,
@@ -106,12 +108,25 @@ function HomePage() {
 
   return (
     <>
+      <h1
+        style={{
+          color: "#343a40",
+          backgroundColor: "#ffb30e",
+          marginBottom: "0",
+          paddingLeft: "1%",
+          paddingTop: "1%",
+        }}
+      >
+        Makelty
+      </h1>
       <main>
         <div>
           <h1>Are you starving?</h1>
           <FontAwesomeIcon icon="fa-solid fa-circle-location-arrow" />{" "}
           <h3>Within a few clicks, find meals thatare accessible near you</h3>
-          <div className="special"></div>
+          <div className="special">
+            <img src="/you.png" />
+          </div>
         </div>
         <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png" />
       </main>
@@ -123,16 +138,16 @@ function HomePage() {
               <p>%</p>
             </div>
             <img
-              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-2.png"
               alt=""
             />
 
-            <h3>Fla hills sanditch</h3>
+            <h3>Ma9loub Chawarma</h3>
             <span>6 days Remaining</span>
           </div>
           <div className="news-item">
             <div className="percentage">
-              <h1>15</h1>
+              <h1>30</h1>
               <p>%</p>
             </div>
             <img
@@ -140,8 +155,21 @@ function HomePage() {
               alt=""
             />
 
-            <h3>Fla hills sanditch</h3>
-            <span>6 days Remaining</span>
+            <h3>Pizza 4 Fromage</h3>
+            <span>2 days Remaining</span>
+          </div>
+          <div className="news-item">
+            <div className="percentage">
+              <h1>20</h1>
+              <p>%</p>
+            </div>
+            <img
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-3.png"
+              alt=""
+            />
+
+            <h3>Pack Lunch 5pcs</h3>
+            <span>7 days Remaining</span>
           </div>
           <div className="news-item">
             <div className="percentage">
@@ -149,24 +177,11 @@ function HomePage() {
               <p>%</p>
             </div>
             <img
-              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
+              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-4.png"
               alt=""
             />
 
-            <h3>Fla hills sanditch</h3>
-            <span>6 days Remaining</span>
-          </div>
-          <div className="news-item">
-            <div className="percentage">
-              <h1>15</h1>
-              <p>%</p>
-            </div>
-            <img
-              src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/discount-item-1.png"
-              alt=""
-            />
-
-            <h3>Fla hills sanditch</h3>
+            <h3>Mlawi special</h3>
             <span>6 days Remaining</span>
           </div>
         </section>
@@ -185,17 +200,20 @@ function HomePage() {
               <div className="about-card">
                 <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/order.png"></img>
                 <h3>Choose order</h3>
-                <p>Choose the location where your food will be delivered.</p>
+                <p>Check over hundreds of menus to pick your favorite food</p>
               </div>
               <div className="about-card">
                 <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/pay.png"></img>
                 <h3>Pay advanced</h3>
-                <p>Choose the location where your food will be delivered.</p>
+                <p>
+                  It's quick, safe, and simple. Select several methods of
+                  payment
+                </p>
               </div>
               <div className="about-card">
                 <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/meals.png"></img>
                 <h3>Enjoy meals</h3>
-                <p>Choose the location where your food will be delivered.</p>
+                <p>Food is made and delivered directly to your home.</p>
               </div>
             </div>
           </div>
@@ -205,43 +223,43 @@ function HomePage() {
         <h1 style={{ fontWeight: "bold", color: "#f0742c" }}>Popular items</h1>
         <OwlCarousel className="owl-theme carou" {...option}>
           <div class="carousel-card">
-            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
-            <h3>Cheese Burger</h3>
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/toffes-cake.png"></img>
+            <h3>Toffes Cake</h3>
             <span>
               <FontAwesomeIcon icon={faLocationArrow} size="sm" /> Burger Arena
             </span>
-            <h5>$3.88</h5>
-            <button>Order nows</button>
+            <h5>3.5 Dt</h5>
+            <button>Order now !</button>
           </div>
           <div class="carousel-card">
-            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
-            <h3>Cheese Burger</h3>
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/dancake.png"></img>
+            <h3>DanCake</h3>
             <span>
               <FontAwesomeIcon icon={faLocationArrow} size="sm" />
-              Burger Arena
+              McKoul
             </span>
-            <h5>$3.88</h5>
-            <button>Order nows</button>
+            <h5>4 Dt</h5>
+            <button>Order now !</button>
           </div>{" "}
           <div class="carousel-card">
-            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
-            <h3>Cheese Burger</h3>
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/crispy-sandwitch.png"></img>
+            <h3>Crispy Dandwitch</h3>
             <span>
               <FontAwesomeIcon icon={faLocationArrow} size="sm" />
-              Burger Arena
+              Plan B
             </span>
-            <h5>$3.88</h5>
-            <button>Order nows</button>
+            <h5>4.5 Dt</h5>
+            <button>Order now !</button>
           </div>{" "}
           <div class="carousel-card">
-            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
-            <h3>Cheese Burger</h3>
+            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/thai-soup.png"></img>
+            <h3>Thai Soup</h3>
             <span>
               <FontAwesomeIcon icon={faLocationArrow} size="sm" />
-              Burger Arena
+              My House
             </span>
-            <h5>$3.88</h5>
-            <button>Order nows</button>
+            <h5>4.8 Dt</h5>
+            <button>Order now !</button>
           </div>
           <div class="carousel-card">
             <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/cheese-burger.png"></img>
@@ -251,14 +269,14 @@ function HomePage() {
               <FontAwesomeIcon icon={faLocationArrow} size="sm" />
               Burger Arena
             </span>
-            <h5>$3.88</h5>
-            <button>Order nows</button>
+            <h5>7 Dt</h5>
+            <button>Order now !</button>
           </div>
         </OwlCarousel>
       </section>
       <section className="last">
         <h1>Are you ready to order with the best deals?</h1>
-        <button>
+        <button onClick={() => history.push("/auth/signin")}>
           <FontAwesomeIcon icon={faLocationArrow} size="sm" />
           <span> PROCEED TO ORDER</span>
         </button>

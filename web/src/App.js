@@ -28,7 +28,7 @@ function ForceLogin() {
   let storedToken = localStorage.getItem("token");
   useEffect(() => {
     if (!storedToken) {
-      history.push("/auth/signin");
+      history.push("/");
     } else {
       if (!token) {
         dispatch(restoreSession({ token: storedToken }));
@@ -58,7 +58,6 @@ function App() {
 
         <Switch>
           <Route exact path="/">
-            <Navbars />
             <HomePage />
           </Route>
           <Route path="/home">

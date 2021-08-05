@@ -18,6 +18,12 @@ main div .special {
   border-radius: 8px;
   margin-top: 2em;
 }
+
+main div .special img {
+  width: 100%;
+  border: 2px solid rgb(151, 153, 151);
+}
+
 main div h1 {
   font-size: 4em;
   font-weight: bolder;
