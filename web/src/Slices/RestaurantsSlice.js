@@ -6,6 +6,7 @@ const RestaurantsSlice = createSlice({
   name: 'restaurants',
   initialState: {
     menu:{},
+    orders:[],
     orderitems:[],
     restaurants:{}
   },
@@ -19,8 +20,11 @@ const RestaurantsSlice = createSlice({
     setOrderItems:(state,action)=>{
       state.orderitems=action.payload
     },
-    addOrderItem: (state,action) => {
-       state.orderitems=[...state.orderitems,action.payload]
+    setOrders:(state,action)=>{
+      state.orders=action.payload
+    },
+    addOrder: (state,action) => {
+       state.orders=[...state.orders,action.payload]
       },
     editActive: (state,action) => {
         state.restaurants[action.payload.id].active= action.payload.active
@@ -28,7 +32,7 @@ const RestaurantsSlice = createSlice({
 }
 })
 
-export const {storerestaurants, storeMenuItems, setOrderItems, editActive,addOrderItem } = RestaurantsSlice.actions
+export const {storerestaurants, storeMenuItems, setOrderItems, editActive,addOrder,setOrders} = RestaurantsSlice.actions
 
 export default RestaurantsSlice.reducer
 // // Can still subscribe to the store
