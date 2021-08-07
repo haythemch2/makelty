@@ -17,9 +17,9 @@ const OrderSchema = new mongoose.Schema({
   to: {
     type: mongoose.Schema.ObjectId,
   },
-  orderitems:[{type:mongoose.Schema.ObjectId,ref:'orderitem'}],
-  confirmedCount:{type:Number,default:0}
+  orderitems: [{ type: mongoose.Schema.ObjectId, ref: "orderitem" }],
+  confirmedCount: { type: Number, default: 0 },
+  readyCount: { type: Number, default: 0 },
 });
-
 
 module.exports = Order = mongoose.model("order", OrderSchema);

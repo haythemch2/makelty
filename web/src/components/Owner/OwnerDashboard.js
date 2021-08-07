@@ -1,10 +1,10 @@
-import { Alert } from "react-bootstrap";
+import { Alert, Tabs, Tab } from "react-bootstrap";
 import React, { useEffect, useState } from "react";
 import OwnerNotifications from "./OwnerNotifications";
 import axios from "axios";
 import OwnerManager from "./OwnerManager";
-import {useDispatch,useSelector} from 'react-redux'
-import {storerestaurants}from './../../Slices/RestaurantsSlice'
+import { useDispatch, useSelector } from "react-redux";
+import { storerestaurants } from "./../../Slices/RestaurantsSlice";
 
 function OwnerDashboard() {
   const AccountType = localStorage.getItem("accountType");
@@ -17,13 +17,13 @@ function OwnerDashboard() {
       ? axios
           .post("http://localhost:3001/R/getMyRestaurant", { ownerId })
           .then((res) => {
-            dispatch(storerestaurants(res.data))
+            dispatch(storerestaurants(res.data));
           })
           .catch((err) => console.log(err))
       : console.log({ ownerId: ownerId });
   }, []);
 
- const Restaurant = useSelector(state => state.Restaurant.restaurants)
+  const Restaurant = useSelector((state) => state.Restaurant.restaurants);
 
   return (
     <div>
@@ -34,7 +34,12 @@ function OwnerDashboard() {
       ) : (
         <>
           <OwnerManager Restaurant={Restaurant} />
-          <OwnerNotifications Restaurant={Restaurant} />
+          <Tabs defaultActiveKey="Orders">
+            <Tab eventKey="Orders" title="Notifications">
+              <OwnerNotifications Restaurant={Restaurant} />
+            </Tab>
+            <Tab eventKey="Dashboard" title="DashBoard"></Tab>
+          </Tabs>
         </>
       )}
     </div>

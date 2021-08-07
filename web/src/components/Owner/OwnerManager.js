@@ -11,9 +11,6 @@ function OwnerManager({ Restaurant }) {
         />
         <h1>{Restaurant.title}</h1>
         <p>{Restaurant.description}</p>
-        <p>
-          <Button variant="outline-warning">Orders</Button>
-        </p>
       </Jumbotron>
     </div>
   );

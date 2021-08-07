@@ -16,6 +16,13 @@ router.post("/confirmOrderItem", (req, res) => {
       res.status(400).json({ error: "Unable to edit this order" })
     );
 });
+router.post("/readyOrderItem", (req, res) => {
+  OrderItem.findByIdAndUpdate(req.body.Id, { ready: true })
+    .then((order) => res.json({ msg: "Order edited successfully" }))
+    .catch((err) =>
+      res.status(400).json({ error: "Unable to edit this order" })
+    );
+});
 
 router.post("/editmenuitem", (req, res) => {
   Menuitem.findByIdAndUpdate(req.params.menuItemId, req.body)
@@ -61,6 +68,17 @@ router.post("/updateOrderItem", (req, res) => {
           if (order.confirmedCount >= orderItemsCount) {
             // TODO : report bug when  order.confirmedCount > orderItemsCount
             order.confirmed = true;
+          }
+          order.save();
+        });
+      }
+      if (req.body.updates.ready) {
+        Order.findById(item.orderId).then((order) => {
+          let orderItemsCount = order.orderitems.length;
+          order.readyCount++;
+          if (order.readyCount >= orderItemsCount) {
+            // TODO : report bug when  order.confirmedCount > orderItemsCount
+            order.ready = true;
             realtime.emitEvent("deliveryOrder", {}, order);
             console.log("delivery order emiited hne ayy!!");
           }

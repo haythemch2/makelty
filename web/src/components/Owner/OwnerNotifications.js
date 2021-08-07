@@ -7,7 +7,7 @@ import {
   addOrder,
   setOrders,
 } from "../../Slices/RestaurantsSlice";
-import { Button, Col, Container, Toast, Table } from "react-bootstrap";
+import { Button, Col, Container, Toast, Table, Alert } from "react-bootstrap";
 
 function OwnerNotifications({ Restaurant }) {
   let token = localStorage.getItem("token");
@@ -75,6 +75,20 @@ function OwnerNotifications({ Restaurant }) {
       });
     setPing(!ping);
   };
+  const handleReady = ({ orderItemId }) => {
+    axios
+      .post("http://localhost:3001/R/updateOrderItem", {
+        orderItemId,
+        updates: { ready: true },
+      })
+      .then((res) => {
+        console.log("pinged");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    setPing(!ping);
+  };
 
   return (
     <Container style={{ display: "flex" }}>
@@ -84,6 +98,7 @@ function OwnerNotifications({ Restaurant }) {
         token={token}
       />
       <Col>
+        <Alert variant="success">New Orders Notification</Alert>
         {orderItemList
           .filter((orderItem) => orderItem.confirmed == false)
           .map((orderItem, key) => (
@@ -134,14 +149,17 @@ function OwnerNotifications({ Restaurant }) {
           ))}
       </Col>
       <Col>
-        {" "}
+        <Alert variant="info">Orders Cooking </Alert>{" "}
         {orderItemList
-          .filter((orderItem) => orderItem.confirmed == true)
+          .filter(
+            (orderItem) =>
+              orderItem.confirmed == true && orderItem.ready == false
+          )
           .map((orderItem, key) => (
             <Toast key={key}>
               <Toast.Header>
                 <strong className="mr-auto" style={{ color: "orange" }}>
-                  New Order
+                  Confirmed Order
                 </strong>
                 <small>just now!</small>
               </Toast.Header>
@@ -172,13 +190,67 @@ function OwnerNotifications({ Restaurant }) {
                   style={{ width: "100%" }}
                   variant="outline-info"
                   onClick={() =>
-                    handleConfirm({
+                    handleReady({
                       orderItemId: orderItem._id,
                       orderId: orderItem.orderId,
                     })
                   }
                 >
                   Ready !
+                </Button>
+              </Toast.Body>
+            </Toast>
+          ))}
+      </Col>
+      <Col>
+        <Alert variant="danger">Ready for Pickup</Alert>{" "}
+        {orderItemList
+          .filter(
+            (orderItem) =>
+              orderItem.confirmed == true && orderItem.ready == true
+          )
+          .map((orderItem, key) => (
+            <Toast key={key}>
+              <Toast.Header>
+                <strong className="mr-auto" style={{ color: "orange" }}>
+                  Order ready
+                </strong>
+                <small>for pickup</small>
+              </Toast.Header>
+              <Toast.Body>
+                <Table striped bordered hover>
+                  <thead>
+                    <tr>
+                      <th>Quantity</th>
+                      <th>Item</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderItem.items.map((item) => (
+                      <tr>
+                        <td>{item.qt}</td>
+                        <td>{item.name}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </Table>
+              </Toast.Body>
+              <Toast.Body>
+                <h6 className="mr-auto">
+                  <span style={{ color: "orange" }}>note : </span>
+                  {findOrder(orderItem.orderId).note}
+                </h6>
+                <Button
+                  style={{ width: "100%" }}
+                  variant="outline-danger"
+                  onClick={() =>
+                    handleReady({
+                      orderItemId: orderItem._id,
+                      orderId: orderItem.orderId,
+                    })
+                  }
+                >
+                  Picked Up
                 </Button>
               </Toast.Body>
             </Toast>
