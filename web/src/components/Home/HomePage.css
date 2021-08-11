@@ -8,20 +8,29 @@ main {
   justify-content: center;
   flex-wrap: wrap-reverse;
 }
+
+.logo-cont {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.logo {
+  width: 150px;
+}
 main div {
   width: 45%;
 }
 main div .special {
   width: 80%;
   height: 150px;
-  background-color: white;
   border-radius: 8px;
   margin-top: 2em;
-}
-
-main div .special img {
-  width: 100%;
   border: 2px solid rgb(151, 153, 151);
+  background-image: url("../../you.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
 main div h1 {
@@ -29,11 +38,11 @@ main div h1 {
   font-weight: bolder;
   color: white;
 }
-main img {
+main .anim-img {
   width: 40%;
   transition-duration: 0.5s;
 }
-main img:hover {
+main .anim-img:hover {
   /*
   transform: translate(0, -40px);*/
 

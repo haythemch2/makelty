@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, Container } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
 import withReactContent from "sweetalert2-react-content";
@@ -43,7 +43,7 @@ function AddRestaurantOwner() {
   };
 
   return (
-    <div>
+    <Container>
       <Form onSubmit={(e) => e.preventDefault()}>
         <Form.Group controlId="formBasicEmail">
           <Form.Label>Full Name</Form.Label>
@@ -78,11 +78,11 @@ function AddRestaurantOwner() {
             <option>gabes</option>
           </Form.Control>
         </Form.Group>
-        <Button variant="primary" type="submit" onClick={handleAdd}>
+        <Button variant="outline-primary" type="submit" onClick={handleAdd}>
           AddOwner
         </Button>
       </Form>
-    </div>
+    </Container>
   );
 }
 

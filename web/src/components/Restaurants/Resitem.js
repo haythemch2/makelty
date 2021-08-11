@@ -38,7 +38,9 @@ function Resitem({ rest }, props) {
             <Card.Title style={{ color: "black", textDecoration: "none" }}>
               {rest.title}
             </Card.Title>
-            <Card.Text style={{ color: "black" }}>{rest.description}</Card.Text>
+            <Card.Text style={{ color: "black" }}>
+              {rest.description.slice(0, 50) + "..."}
+            </Card.Text>
             <Distance
               lat1={user.lat}
               lon1={user.lng}

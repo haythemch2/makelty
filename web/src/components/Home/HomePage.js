@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Button, Card, Image } from "react-bootstrap";
+import { Container, Button, Card, Image, Navbar, Nav } from "react-bootstrap";
 
 import {
   editActive,
@@ -17,6 +17,8 @@ import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationArrow } from "@fortawesome/free-solid-svg-icons";
+
+import { Link } from "react-router-dom";
 
 const isThisDeviceMobile = function () {
   let check = false;
@@ -105,30 +107,44 @@ function HomePage() {
   }, []);
 
   const restaurants = useSelector((state) => state.Restaurant.restaurants);
+  const token = useSelector((state) => state.Client.client?.token);
+  let storedToken = localStorage.getItem("token");
 
   return (
     <>
-      <h1
-        style={{
-          color: "#343a40",
-          backgroundColor: "#ffb30e",
-          marginBottom: "0",
-          paddingLeft: "1%",
-          paddingTop: "1%",
-        }}
-      >
-        Makelty
-      </h1>
+      <div style={{ width: "100%" }}>
+        <Navbar bg="light" variant="light">
+          <Container>
+            <img className="logo" src="logo.png" alt="logo" />
+            {!storedToken ? (
+              <Button
+                onClick={() => history.push("/auth/login")}
+                variant="outline-white"
+              >
+                Signin/Signup
+              </Button>
+            ) : (
+              <Button
+                onClick={() => history.push("/home")}
+                variant="outline-white"
+              >
+                Browse
+              </Button>
+            )}
+          </Container>
+        </Navbar>
+      </div>
       <main>
         <div>
           <h1>Are you starving?</h1>
           <FontAwesomeIcon icon="fa-solid fa-circle-location-arrow" />{" "}
           <h3>Within a few clicks, find meals thatare accessible near you</h3>
-          <div className="special">
-            <img src="/you.png" />
-          </div>
+          <div className="special"></div>
         </div>
-        <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png" />
+        <img
+          className="anim-img"
+          src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/hero-header.png"
+        />
       </main>
       <Container>
         <section className="news">
@@ -276,7 +292,7 @@ function HomePage() {
       </section>
       <section className="last">
         <h1>Are you ready to order with the best deals?</h1>
-        <button onClick={() => history.push("/auth/signin")}>
+        <button onClick={() => history.push("/home")}>
           <FontAwesomeIcon icon={faLocationArrow} size="sm" />
           <span> PROCEED TO ORDER</span>
         </button>

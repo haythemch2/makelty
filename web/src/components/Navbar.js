@@ -24,10 +24,8 @@ function Navbars() {
     <div style={{ width: "100%" }}>
       <Navbar bg="light" variant="light">
         <Container>
-          <Navbar.Brand href="/">
-            <img src="https://technext.github.io/foodwagon/v1.0.0/assets/img/gallery/logo.svg" />
-            Makelti
-          </Navbar.Brand>
+          <img className="logo" src="logo.png" alt="logo" />
+
           <Nav className="ml-auto">
             <Nav.Link>
               <Link class="routerLink" to="/">

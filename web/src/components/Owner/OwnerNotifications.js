@@ -104,7 +104,7 @@ function OwnerNotifications({ Restaurant }) {
           .map((orderItem, key) => (
             <Toast key={key}>
               <Toast.Header>
-                <strong className="mr-auto" style={{ color: "orange" }}>
+                <strong className="mr-auto" style={{ color: "#d4edda" }}>
                   New Order
                 </strong>
                 <small>just now!</small>
@@ -129,7 +129,7 @@ function OwnerNotifications({ Restaurant }) {
               </Toast.Body>
               <Toast.Body>
                 <h6 className="mr-auto">
-                  <span style={{ color: "orange" }}>note : </span>
+                  <span style={{ color: "#d4edda" }}>note : </span>
                   {findOrder(orderItem.orderId).note}
                 </h6>
                 <Button
@@ -158,7 +158,7 @@ function OwnerNotifications({ Restaurant }) {
           .map((orderItem, key) => (
             <Toast key={key}>
               <Toast.Header>
-                <strong className="mr-auto" style={{ color: "orange" }}>
+                <strong className="mr-auto" style={{ color: "lightblue" }}>
                   Confirmed Order
                 </strong>
                 <small>just now!</small>
@@ -183,7 +183,7 @@ function OwnerNotifications({ Restaurant }) {
               </Toast.Body>
               <Toast.Body>
                 <h6 className="mr-auto">
-                  <span style={{ color: "orange" }}>note : </span>
+                  <span style={{ color: "lightblue" }}>note : </span>
                   {findOrder(orderItem.orderId).note}
                 </h6>
                 <Button
@@ -212,7 +212,7 @@ function OwnerNotifications({ Restaurant }) {
           .map((orderItem, key) => (
             <Toast key={key}>
               <Toast.Header>
-                <strong className="mr-auto" style={{ color: "orange" }}>
+                <strong className="mr-auto" style={{ color: "#f8d7da" }}>
                   Order ready
                 </strong>
                 <small>for pickup</small>
@@ -237,7 +237,7 @@ function OwnerNotifications({ Restaurant }) {
               </Toast.Body>
               <Toast.Body>
                 <h6 className="mr-auto">
-                  <span style={{ color: "orange" }}>note : </span>
+                  <span style={{ color: "#f8d7da" }}>note : </span>
                   {findOrder(orderItem.orderId).note}
                 </h6>
                 <Button

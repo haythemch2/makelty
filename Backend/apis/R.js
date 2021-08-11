@@ -25,11 +25,27 @@ router.post("/readyOrderItem", (req, res) => {
 });
 
 router.post("/editmenuitem", (req, res) => {
-  Menuitem.findByIdAndUpdate(req.params.menuItemId, req.body)
+  Menuitem.findByIdAndUpdate(req.body.menuItem._id, req.body.menuItem)
     .then((menuitem) => res.json({ msg: "menu item edited successfully" }))
     .catch((err) =>
       res.status(400).json({ error: "Unable to edit this item" })
     );
+});
+
+router.post("/addmenuitem", async (req, res) => {
+  let newMenuItem = { ...req.body.Item };
+  const MenuIt = new Menuitem({
+    ...newMenuItem,
+  });
+  const MenuItId = MenuIt._id;
+  MenuIt.save();
+  Restaurant.findById(req.body.restId)
+    .then((restaurant) => {
+      restaurant.menu.push(MenuItId);
+      restaurant.save();
+      res.send("done");
+    })
+    .catch((err) => res.send(err));
 });
 
 router.post("/getOrderItems", (req, res) => {

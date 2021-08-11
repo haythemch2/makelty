@@ -20,6 +20,7 @@ import OwnerDashboard from "./components/Owner/OwnerDashboard";
 import DeliveryDashboard from "./components/Delivery/DeliveryDashboard";
 import HomePage from "./components/Home/HomePage";
 import Profile from "./components/Profile/Profile";
+import Browse from "./components/Restaurants/Browse";
 
 function ForceLogin() {
   const token = useSelector((state) => state.Client.client?.token);
@@ -28,11 +29,11 @@ function ForceLogin() {
   let storedToken = localStorage.getItem("token");
   useEffect(() => {
     if (!storedToken) {
-      history.push("/");
+      history.push("/auth/login");
     } else {
       if (!token) {
         dispatch(restoreSession({ token: storedToken }));
-        history.push("/");
+        history.push("/home");
       }
     }
   }, [storedToken]);
@@ -64,6 +65,7 @@ function App() {
             <Navbars />
             <Gmaps />
             <Itemlist />
+            <Browse />
           </Route>
           <Route path="/profile">
             <Navbars />

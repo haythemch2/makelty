@@ -11,6 +11,7 @@ import axios from "axios";
 import OwlCarousel from "react-owl-carousel";
 import "owl.carousel/dist/assets/owl.carousel.css";
 import "owl.carousel/dist/assets/owl.theme.default.css";
+import { Container } from "react-bootstrap";
 
 const isThisDeviceMobile = function () {
   let check = false;
@@ -103,7 +104,7 @@ function Itemlist() {
     dispatch(editActive({ id: restKey, active: isVisible }));
   };
   return (
-    <div>
+    <Container>
       <OwlCarousel {...option}>
         {Object.keys(restaurants).map((restKey) => (
           // <VisibilitySensor
@@ -113,7 +114,7 @@ function Itemlist() {
           /* </VisibilitySensor> */
         ))}
       </OwlCarousel>
-    </div>
+    </Container>
   );
 }
 

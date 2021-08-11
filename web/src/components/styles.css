@@ -50,3 +50,37 @@
 .noHover:hover {
   text-decoration: none !important;
 }
+
+.main-bg {
+  width: 100%;
+  background-image: url("../bg-main.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100vh;
+  background-position-y: top;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.main-bg > * {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  margin-top: 190px !important;
+}
+.sign-form {
+  border: 1px solid rgb(195, 210, 216) !important;
+}
+
+@media screen and (max-width: 800px) {
+  .main-bg > * {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .sign-form {
+    width: 100% !important;
+  }
+}

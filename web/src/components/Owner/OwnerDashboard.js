@@ -5,6 +5,7 @@ import axios from "axios";
 import OwnerManager from "./OwnerManager";
 import { useDispatch, useSelector } from "react-redux";
 import { storerestaurants } from "./../../Slices/RestaurantsSlice";
+import ManageMenu from "./ManageMenu";
 
 function OwnerDashboard() {
   const AccountType = localStorage.getItem("accountType");
@@ -38,7 +39,9 @@ function OwnerDashboard() {
             <Tab eventKey="Orders" title="Notifications">
               <OwnerNotifications Restaurant={Restaurant} />
             </Tab>
-            <Tab eventKey="Dashboard" title="DashBoard"></Tab>
+            <Tab eventKey="Dashboard" title="DashBoard">
+              <ManageMenu Restaurant={Restaurant} />
+            </Tab>
           </Tabs>
         </>
       )}

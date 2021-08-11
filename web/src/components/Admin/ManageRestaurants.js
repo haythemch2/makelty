@@ -230,7 +230,9 @@ function ManageRestaurants() {
           Toolbar: GridToolbar,
         }}
       />
-      <Button onClick={() => setShow(true)}>Add Restaurant</Button>
+      <Button variant="outline-info" onClick={() => setShow(true)}>
+        Add Restaurant
+      </Button>
       <Modal show={show} onHide={() => setShow(false)}>
         <Modal.Header closeButton>
           <Modal.Title>add Restaurant</Modal.Title>

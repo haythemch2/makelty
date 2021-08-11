@@ -50,8 +50,8 @@ function FoodMenu(props) {
         <Col sm={9}></Col>
         <Tab.Container defaultActiveKey={restaurant.menu[0]}>
           <Row>
-            <Col sm={3}>
-              <Nav variant="pills" className="flex-column">
+            <Col sm={5}>
+              <Nav fill variant="pills" className="flex-column">
                 {restaurant.menu.map((menuItemId) => (
                   <Nav.Item>
                     <NavLink menuItemId={menuItemId} />
@@ -59,7 +59,7 @@ function FoodMenu(props) {
                 ))}
               </Nav>
             </Col>
-            <Col sm={9}>
+            <Col sm={7}>
               <Carousel fade interval={1500} variant="dark" controls={false}>
                 {MenuItems.map((MenuItem) => (
                   <Carousel.Item>
@@ -71,7 +71,12 @@ function FoodMenu(props) {
                     />
                   </Carousel.Item>
                 ))}
-                <Carousel.Caption>
+                <Carousel.Caption
+                  style={{
+                    backgroundColor: "RGBA(0,0,0,0.64)",
+                    borderRadius: "4%",
+                  }}
+                >
                   <h3>{restaurant.title}</h3>
                   <p>{restaurant.description}</p>
                 </Carousel.Caption>
